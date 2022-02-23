@@ -14,28 +14,30 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Scanner;
 import java.util.ArrayList;
+
 /**
  *
- * @author christoftobias.weick
+ * @author Christof Weickhardt
  */
 public class Garage {
-    private static ArrayList<Fahrzeug> fahrzeuge = new ArrayList<>();
-    
-    public static void main(String[] args){
+    private static ArrayList<Fahrzeug> vehicles = new ArrayList<>();
+
+    public static void main(String[] args) {
         readData();
-        int actionchoice;
         printActionMenu();
-        while((actionchoice = getIntInput(0,4))!=0){
+
+        int actionChoice;
+        while ((actionChoice = getIntInput(0, 4)) != 0) {
             newline();
-            switch(actionchoice){
+            switch (actionChoice) {
                 case 1:
                     addNewVehicle();
                     break;
                 case 2:
-                    showVehicels();
+                    showVehicles();
                     break;
                 case 3:
-                    bearbeiten();
+                    edit();
                     break;
                 case 4:
                     removeVehicle();
@@ -44,99 +46,103 @@ public class Garage {
             printActionMenu();
         }
     }
-    private static void bearbeiten(){
+
+    private static void edit() {
         println("Wählen sie einen Index den sie bearbeiten wollen");
-        int editchoice = getIntInput(0,fahrzeuge.size()-1);
-        Fahrzeug f = fahrzeuge.get(editchoice);
+        int choice = getIntInput(0, vehicles.size() - 1);
+        Fahrzeug f = vehicles.get(choice);
         println("! eingeben, wenn nichts geänder werden soll:");
-        println("Versicherungsnummer ("+f.getVersicherungsnummer()+")");
-        Scanner sc = new Scanner(System.in);
+        println("Versicherungsnummer (" + f.getVersicherungsnummer() + ")");
+        Scanner scanner = new Scanner(System.in);
         String v;
-        if(!(v = sc.next()).equals("!")){
+        if (!(v = scanner.next()).equals("!")) {
             f.setVersicherungsnummer(v);
         }
-        
-        println("Marke ("+f.getMarke()+")");
+
+        println("Marke (" + f.getMarke() + ")");
         String mark = "";
-        if(!(mark = sc.next()).equals("!")){
+        if (!(mark = scanner.next()).equals("!")) {
             f.setMarke(mark);
         }
-        
-        println("Modell ("+f.getModell()+")");
+
+        println("Modell (" + f.getModell() + ")");
         String mod = "";
-        if(!(mod = sc.next()).equals("!")){
+        if (!(mod = scanner.next()).equals("!")) {
             f.setModell(mod);
         }
-        if(f instanceof Lastwagen){
-            println("Ladeflaeche ("+((Lastwagen)f).getLadeflaeche()+")");
+        if (f instanceof Lastwagen) {
+            println("Ladeflaeche (" + ((Lastwagen) f).getLadeflaeche() + ")");
             String ladeflaeche = "";
-            if(!(ladeflaeche = sc.next()).equals("!")){
-                ((Lastwagen)f).setLadeflaeche(new Double(ladeflaeche));
+            if (!(ladeflaeche = scanner.next()).equals("!")) {
+                ((Lastwagen) f).setLadeflaeche(Double.valueOf(ladeflaeche));
             }
-            fahrzeuge.remove(editchoice);
-            fahrzeuge.add(f);
+            vehicles.remove(choice);
+            vehicles.add(f);
             saveToFile();
-        }else if(f instanceof Auto){
-            println("Sitzplaetze ("+((Auto)f).getSitzplaetze()+")");
-            String plaetze = "";
-            if(!(plaetze = sc.next()).equals("!")){
-                ((Auto)f).setSitzplaetze(new Integer(plaetze));
+        } else if (f instanceof Auto) {
+            println("Sitzplaetze (" + ((Auto) f).getSitzplaetze() + ")");
+            String seats = "";
+            if (!(seats = scanner.next()).equals("!")) {
+                ((Auto) f).setSitzplaetze(Integer.valueOf(seats));
             }
-            fahrzeuge.remove(editchoice);
-            fahrzeuge.add(f);
+            vehicles.remove(choice);
+            vehicles.add(f);
             saveToFile();
-        }else{
-            fahrzeuge.remove(editchoice);
-            fahrzeuge.add(f);
+        } else {
+            vehicles.remove(choice);
+            vehicles.add(f);
             saveToFile();
         }
-        
-        
+
     }
-    private static int getIntInput(int min,int max){
-        boolean hasfound = false;
-        Scanner sc = new Scanner(System.in);
+
+    private static int getIntInput(int min, int max) {
+        Scanner scanner = new Scanner(System.in);
         int choice = 0;
-        while(!hasfound){
-            try{
-                choice = sc.nextInt();
-                if(choice <= max && choice >= min){
-                    hasfound = true;
-                }else{
+        while (true) {
+            try {
+                choice = scanner.nextInt();
+                if (choice <= max && choice >= min) {
+                    scanner.close();
+                    break;
+                } else {
                     println("Dies ist keine gültige Eingabe");
                 }
-            }catch(Exception e){
+            } catch (Exception e) {
             }
         }
         return choice;
     }
-    private static int getIntInput(){
-        boolean hasfound = false;
-        Scanner sc = new Scanner(System.in);
+
+    private static int getIntInput() {
+        Scanner scanner = new Scanner(System.in);
         int choice = 0;
-        while(!hasfound){
-            try{
-                choice = sc.nextInt();
-                hasfound = true;
-            }catch(Exception e){
+        while (true) {
+            try {
+                choice = scanner.nextInt();
+                scanner.close();
+                break;
+            } catch (Exception e) {
             }
         }
         return choice;
     }
-    private static double getDoubleInput(){
-        boolean hasfound = false;
-        Scanner sc = new Scanner(System.in);
+
+    private static double getDoubleInput() {
+        Scanner scanner = new Scanner(System.in);
         double choice = 0;
-        while(!hasfound){
-            try{
-                choice = sc.nextDouble();
-                hasfound = true;
-            }catch(Exception e){
+        while (true) {
+            try {
+                choice = scanner.nextDouble();
+                scanner.close();
+                break;
+            } catch (Exception e) {
             }
         }
         return choice;
     }
-    private static void printVehicleTypes(){
+
+    private static void printVehicleTypes() {
         println("[0] Beenden");
         println("[1] Auto");
         println("[2] Lastwagen");
@@ -144,7 +150,8 @@ public class Garage {
         newline();
         println("Ihre Wahl:");
     }
-    private static void printActionMenu(){
+
+    private static void printActionMenu() {
         println("[0] Beenden");
         println("[1] Neues Fahrzeug erfassen");
         println("[2] Liste anzeigen");
@@ -153,39 +160,40 @@ public class Garage {
         newline();
         println("Ihre Wahl:");
     }
-    private static void newline(){
+
+    private static void newline() {
         System.out.println("");
     }
-    private static void print(String message){
-        System.out.print(message);
-    }
-    private static void println(String message){
+
+    private static void println(String message) {
         System.out.println(message);
     }
+
     private static void saveToFile() {
         FileOutputStream fos = null;
         try {
             fos = new FileOutputStream(new File("Vehicels.txt"));
             ObjectOutputStream oos = null;
             oos = new ObjectOutputStream(fos);
-            oos.writeObject(fahrzeuge);
+            oos.writeObject(vehicles);
             oos.flush();
             oos.close();
         } catch (FileNotFoundException e) {
         } catch (IOException e) {
         }
     }
+
     private static void readData() {
         FileInputStream fis;
         try {
             File f = new File("Vehicels.txt");
-            if(f.exists()){
+            if (f.exists()) {
                 fis = new FileInputStream(f);
                 ObjectInputStream ois = null;
                 ois = new ObjectInputStream(fis);
-                fahrzeuge = (ArrayList<Fahrzeug>) ois.readObject();
+                vehicles = (ArrayList<Fahrzeug>) ois.readObject();
                 ois.close();
-            }else{
+            } else {
                 f.createNewFile();
             }
         } catch (FileNotFoundException e) {
@@ -193,62 +201,63 @@ public class Garage {
         } catch (ClassNotFoundException e) {
         }
     }
-    
-    private static void showVehicels() {
-        if(fahrzeuge.isEmpty()){
+
+    private static void showVehicles() {
+        if (vehicles.isEmpty()) {
             println("Es wurden keine Fahrzeuge gefunden");
-        }else{
+        } else {
             int index = 0;
-            for(Fahrzeug f : fahrzeuge){
-                println("["+index+"] "+f.toString());
+            for (Fahrzeug f : vehicles) {
+                println("[" + index + "] " + f.toString());
                 index++;
             }
         }
         newline();
     }
-    
+
     private static void addNewVehicle() {
         printVehicleTypes();
         int choice = getIntInput(0, 3);
-        if(choice > 0){
+        if (choice > 0) {
             Fahrzeug basicinfo = new Fahrzeug();
-            Scanner sc = new Scanner(System.in);
+            Scanner scanner = new Scanner(System.in);
             println("Marke des Fahrzeuges:");
-            basicinfo.setMarke(sc.next());
+            basicinfo.setMarke(scanner.next());
             println("Modell des Fahrzeuges:");
-            basicinfo.setModell(sc.next());
+            basicinfo.setModell(scanner.next());
             println("Versicherungsnummer des Fahrzeuges:");
-            basicinfo.setVersicherungsnummer(sc.next());
-            switch(choice){
+            basicinfo.setVersicherungsnummer(scanner.next());
+            scanner.close();
+            switch (choice) {
                 case 1:
                     Auto auto = new Auto(basicinfo);
                     println("Sitzplaetze im Fahrzeug:");
                     auto.setSitzplaetze(getIntInput());
-                    fahrzeuge.add(auto);
+                    vehicles.add(auto);
                     saveToFile();
                     break;
                 case 2:
                     Lastwagen lw = new Lastwagen(basicinfo);
                     println("Ladeflaeche des Lastwagens:");
                     lw.setLadeflaeche(getDoubleInput());
-                    fahrzeuge.add(lw);
+                    vehicles.add(lw);
                     saveToFile();
                     break;
                 case 3:
                     Motorrad m = new Motorrad(basicinfo);
-                    fahrzeuge.add(m);
+                    vehicles.add(m);
                     saveToFile();
                     break;
             }
         }
         newline();
     }
-    
+
     private static void removeVehicle() {
-        if(!fahrzeuge.isEmpty()){
+        if (!vehicles.isEmpty()) {
             println("Welches auto möchten Sie gerne entfernen:");
-            int todelete = getIntInput(0, fahrzeuge.size()-1);
-            fahrzeuge.remove(todelete);
+            int vehicleToDelete = getIntInput(0, vehicles.size() - 1);
+            vehicles.remove(vehicleToDelete);
             saveToFile();
         }
         newline();

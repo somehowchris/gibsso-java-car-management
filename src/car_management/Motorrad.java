@@ -9,11 +9,11 @@ import java.io.Serializable;
 
 /**
  *
- * @author christoftobias.weick
+ * @author Christof Weickhardt
  */
-public class Motorrad extends Fahrzeug implements Serializable{
+public class Motorrad extends Fahrzeug implements Serializable {
     public Motorrad(Fahrzeug f) {
         super(f);
     }
-    
+
 }

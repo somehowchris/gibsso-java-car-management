@@ -7,9 +7,9 @@ package car_management;
 
 /**
  *
- * @author christoftobias.weick
+ * @author Christof Weickhardt
  */
-public class Lastwagen extends Fahrzeug{
+public class Lastwagen extends Fahrzeug {
     private double ladeflaeche;
 
     public Lastwagen(double ladeflaeche, String versicherungsnummer, String marke, String modell) {
@@ -19,11 +19,11 @@ public class Lastwagen extends Fahrzeug{
 
     public Lastwagen() {
     }
-    
+
     public Lastwagen(Fahrzeug f) {
         super(f);
     }
-    
+
     public void setLadeflaeche(double ladeflaeche) {
         this.ladeflaeche = ladeflaeche;
     }
@@ -34,8 +34,8 @@ public class Lastwagen extends Fahrzeug{
 
     @Override
     public String toString() {
-        return getClass().getSimpleName()+": "+getVersicherungsnummer()+" - "+getMarke()+" - "+ getModell()+" - "+ getLadeflaeche()+" m2";
+        return getClass().getSimpleName() + ": " + getVersicherungsnummer() + " - " + getMarke() + " - " + getModell()
+                + " - " + getLadeflaeche() + " m2";
     }
-    
-    
+
 }

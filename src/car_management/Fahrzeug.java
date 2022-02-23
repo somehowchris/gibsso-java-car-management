@@ -9,20 +9,22 @@ import java.io.Serializable;
 
 /**
  *
- * @author christoftobias.weick
+ * @author Christof Weickhardt
  */
-public class Fahrzeug implements Serializable{
+public class Fahrzeug implements Serializable {
     private String versicherungsnummer;
     private String marke;
     private String modell;
 
     public Fahrzeug() {
     }
-    public Fahrzeug(Fahrzeug f){
+
+    public Fahrzeug(Fahrzeug f) {
         setVersicherungsnummer(f.versicherungsnummer);
         setMarke(f.marke);
         setModell(f.modell);
     }
+
     public Fahrzeug(String versicherungsnummer, String marke, String modell) {
         this.versicherungsnummer = versicherungsnummer;
         this.marke = marke;
@@ -52,9 +54,10 @@ public class Fahrzeug implements Serializable{
     public void setMarke(String marke) {
         this.marke = marke;
     }
+
     @Override
     public String toString() {
-        return  getClass().getSimpleName()+": "+getVersicherungsnummer()+" - "+getMarke()+" - "+ getModell();
+        return getClass().getSimpleName() + ": " + getVersicherungsnummer() + " - " + getMarke() + " - " + getModell();
     }
-    
+
 }

@@ -9,13 +9,14 @@ import java.io.Serializable;
 
 /**
  *
- * @author christoftobias.weick
+ * @author Christof Weickhardt
  */
-public class Auto extends Fahrzeug implements Serializable{
+public class Auto extends Fahrzeug implements Serializable {
     private int sitzplaetze;
 
     public Auto() {
     }
+
     public Auto(Fahrzeug f) {
         super(f);
     }
@@ -35,7 +36,8 @@ public class Auto extends Fahrzeug implements Serializable{
 
     @Override
     public String toString() {
-        return getClass().getSimpleName()+": "+getVersicherungsnummer()+" - "+getMarke()+" - "+ getModell()+" - "+ getSitzplaetze()+" Plätze";
+        return getClass().getSimpleName() + ": " + getVersicherungsnummer() + " - " + getMarke() + " - " + getModell()
+                + " - " + getSitzplaetze() + " Plätze";
     }
-    
+
 }
